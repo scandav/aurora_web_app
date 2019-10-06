@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block app_content %}
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Statistiche</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="wi wi-lightning fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">88 Watt</div>
+                                <div>Current Power</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="{{ url_for('daily') }}">
+                            <span class="pull-left">Max today</span>
+                            <span class="pull-right">88 Watt</span>
+
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-info fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">88 kWh</div>
+                                <div>Daily yield</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="{{ url_for('daily') }}">
+                            <span class="pull-left">Max last 7 days</span>
+                            <span class="pull-right">88 kWh</span>
+
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-lightbulb-o fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">88 kWh</div>
+                                <div>Current year yield</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="{{ url_for('daily') }}">
+                            <span class="pull-left">Total yield</span>
+                            <span class="pull-right">88 kWh</span>
+
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-usd fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">88 €</div>
+                                <div>Current year earnings</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="#">
+                            <span class="pull-left">Total earnings</span>
+                            <span class="pull-right">88 €</span>
+
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-clock-o fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">88 d</div>
+                                <div>Operating time</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="#">
+                            <span class="pull-left">&nbsp;</span>
+                            <span class="pull-right"></span>
+
+                            <div class="clearfix"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div>
+    </div><!-- /#page-wrapper -->
+{% endblock %}
