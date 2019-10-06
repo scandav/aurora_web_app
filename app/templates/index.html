@@ -17,15 +17,15 @@
                                 <i class="wi wi-lightning fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">88 Watt</div>
-                                <div>Current Power</div>
+                                <div class="huge">{{ grid_power }} W</div>
+                                <div>Potenza Attuale</div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <a href="{{ url_for('daily') }}">
-                            <span class="pull-left">Max today</span>
-                            <span class="pull-right">88 Watt</span>
+                            <span class="pull-left">Picco di Potenza Oggi</span>
+                            <span class="pull-right">{{ pwr_peak_td }} W</span>
 
                             <div class="clearfix"></div>
                         </a>
@@ -40,15 +40,15 @@
                                 <i class="fa fa-info fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">88 kWh</div>
-                                <div>Daily yield</div>
+                                <div class="huge">{{ nrg_td }} kWh</div>
+                                <div>Energia Prodotta Oggi</div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <a href="{{ url_for('daily') }}">
-                            <span class="pull-left">Max last 7 days</span>
-                            <span class="pull-right">88 kWh</span>
+                            <span class="pull-left">Energia Ultimi 7 Giorni</span>
+                            <span class="pull-right">{{ nrg_7days }} kWh</span>
 
                             <div class="clearfix"></div>
                         </a>
@@ -63,15 +63,15 @@
                                 <i class="fa fa-lightbulb-o fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">88 kWh</div>
-                                <div>Current year yield</div>
+                                <div class="huge">{{ nrg_current_year }} kWh</div>
+                                <div>Energia Prodotta {{ year }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <a href="{{ url_for('daily') }}">
-                            <span class="pull-left">Total yield</span>
-                            <span class="pull-right">88 kWh</span>
+                            <span class="pull-left">Totale Energia Prodotta</span>
+                            <span class="pull-right">{{ nrg_total }} kWh</span>
 
                             <div class="clearfix"></div>
                         </a>
@@ -90,15 +90,15 @@
                                 <i class="fa fa-usd fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">88 €</div>
-                                <div>Current year earnings</div>
+                                <div class="huge">{{ incent_current_year }} €</div>
+                                <div>Incentivi {{ year }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="panel-footer">
                         <a href="#">
-                            <span class="pull-left">Total earnings</span>
-                            <span class="pull-right">88 €</span>
+                            <span class="pull-left">Incentivi Ultimi 7 Giorni</span>
+                            <span class="pull-right">{{ incent_7days }} €</span>
 
                             <div class="clearfix"></div>
                         </a>
@@ -113,8 +113,8 @@
                                 <i class="fa fa-clock-o fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">88 d</div>
-                                <div>Operating time</div>
+                                <div class="huge">{{ operating_time }} giorni</div>
+                                <div>Tempo Operativo</div>
                             </div>
                         </div>
                     </div>

@@ -4,10 +4,38 @@ from app.models import PVData
 from utils.bokeh_charts import BokehPwrHist, provide_dow, provide_month
 from datetime import datetime as dt
 from datetime import timedelta
+from sqlalchemy import func
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    latest_rec = PVData.query \
+                 .filter(PVData.created > dt.today().strftime('%Y-%m-%d')) \
+                 .order_by(PVData.id.desc()) \
+                 .first()
+    grid_power = latest_rec.grid_power
+    pwr_peak_td = latest_rec.pwr_peak_td
+    nrg_td = round(latest_rec.nrg_td/1E3, 2)
+    nrg_total = int(latest_rec.nrg/1E3)
+    week_recs = PVData.query \
+                .with_entities(PVData.created, PVData.nrg) \
+                .filter(PVData.created >= (dt.now() - timedelta(days=7))) \
+                .order_by(PVData.id).all()
+    nrg_7days = int((week_recs[-1].nrg - week_recs[0].nrg)/1E3)
+    year_recs = PVData.query \
+                .with_entities(PVData.created, PVData.nrg) \
+                .filter(func.strftime('%Y', PVData.created) == str(dt.now().year)) \
+                .order_by(PVData.id).all()
+    nrg_current_year = int((year_recs[-1].nrg - year_recs[0].nrg)/1E3)
+    
+    incent_current_year = nrg_current_year * app.config['INCENTIVES']
+    incent_7days = nrg_7days * app.config['INCENTIVES']
+    operating_time = (dt.today() - dt.strptime(app.config['START_DATE'], '%Y-%m-%d')).days
+    year = dt.today().year
+    
+    return render_template("index.html", grid_power=grid_power, pwr_peak_td=pwr_peak_td, nrg_td=nrg_td,
+                           nrg_7days=nrg_7days, nrg_current_year=nrg_current_year, nrg_total=nrg_total,
+                           incent_current_year=incent_current_year, incent_7days=incent_7days,
+                           operating_time=operating_time, year=year)
 
 @app.route('/daily')
 @app.route('/daily/<date>')
