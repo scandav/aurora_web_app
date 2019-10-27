@@ -4,6 +4,7 @@ from app.models import PVData
 from utils.bokeh_charts import BokehPwrHist, provide_dow, provide_month
 from datetime import datetime as dt
 from datetime import timedelta
+from dateutil.relativedelta import relativedelta
 from sqlalchemy import func
 
 @app.route('/')
@@ -37,9 +38,11 @@ def index():
                            incent_current_year=incent_current_year, incent_7days=incent_7days,
                            operating_time=operating_time, year=year)
 
-@app.route('/daily')
+@app.route('/daily', defaults={'date': dt.today})
 @app.route('/daily/<date>')
-def daily(date=dt.today().strftime('%Y-%m-%d')):
+def daily(date):
+    if hasattr(date, '__call__'):
+        date = date().strftime('%Y-%m-%d')
     db_list = PVData.query \
               .with_entities(PVData.created, PVData.grid_power, PVData.nrg_td) \
               .filter(PVData.created > date) \
@@ -54,3 +57,28 @@ def daily(date=dt.today().strftime('%Y-%m-%d')):
     next_day = (day + timedelta(days=1)).strftime('%Y-%m-%d')
     
     return render_template('daily_production_chart.html', div=div, script=script, day=day_string, next_day=next_day, prev_day=prev_day)
+
+
+@app.route('/monthly', defaults={'date': dt.today})
+@app.route('/monthly/<date>')
+def monthly(date):
+    if hasattr(date, '__call__'):
+        date = date().strftime('%Y-%m')
+
+    db_list = PVData.query\
+        .with_entities(func.strftime('%Y-%m-%d', PVData.created).label('created'),
+                       func.max(PVData.nrg_td).label('nrg_td'))\
+        .filter(PVData.created > date) \
+        .filter(PVData.created < dt.strptime(date, '%Y-%m') + relativedelta(months=1))\
+        .group_by(func.strftime('%Y-%m-%d', PVData.created))\
+        .all()
+
+    script, div = BokehPwrHist(db_list, type='monthly').create_hist()
+
+    month = dt.strptime(date, '%Y-%m')
+    month_string = ' '.join([provide_month(month.month), str(month.year)])
+    prev_month = (month - relativedelta(months=1)).strftime('%Y-%m')
+    next_month = (month + relativedelta(months=1)).strftime('%Y-%m')
+
+    return render_template('monthly_production_chart.html', div=div, script=script, month=month_string, next_month=next_month,
+                           prev_month=prev_month)
