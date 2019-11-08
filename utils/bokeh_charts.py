@@ -22,7 +22,7 @@ class BokehPwrHist:
         elif type == 'monthly':
             db_dict = dict(energy=[round(a.nrg_td/1E3, 1) for a in db_list], created=[dt.strptime(a.created, '%Y-%m-%d') for a in db_list])
             nrg_month = sum(db_dict['energy']) if db_dict['energy'] else 0
-            self.title = 'Produzione Mensile: {} kWh'.format(nrg_month)
+            self.title = 'Produzione Mensile: {:.2f} kWh'.format(nrg_month)
             self.top_vbar = 'energy'
             self.x_axis_label = 'Giorno'
             self.y_axis_label = 'Energia [kWh]'

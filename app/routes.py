@@ -13,10 +13,10 @@ def index():
                  .filter(PVData.created > dt.today().strftime('%Y-%m-%d')) \
                  .order_by(PVData.id.desc()) \
                  .first()
-    grid_power = latest_rec.grid_power
-    pwr_peak_td = latest_rec.pwr_peak_td
-    nrg_td = round(latest_rec.nrg_td/1E3, 2)
-    nrg_total = int(latest_rec.nrg/1E3)
+    grid_power = latest_rec.grid_power if latest_rec else 0
+    pwr_peak_td = latest_rec.pwr_peak_td if latest_rec else 0
+    nrg_td = round(latest_rec.nrg_td/1E3, 2) if latest_rec else 0
+    nrg_total = int(latest_rec.nrg/1E3) if latest_rec else 0
     week_recs = PVData.query \
                 .with_entities(PVData.created, PVData.nrg) \
                 .filter(PVData.created >= (dt.now() - timedelta(days=7))) \
