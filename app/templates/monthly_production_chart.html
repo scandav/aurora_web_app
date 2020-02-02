@@ -15,10 +15,17 @@
 {% endblock %}
 
 {% block app_content %}
-<div align="center">
-    <h3 align="center"><a href={{ url_for('monthly', date=prev_month) }} class="btn btn-default">Precedente</a>  {{ month }}  <a href={{ url_for('monthly', date=next_month) }} class="btn btn-default">Successivo</a></h3>
-    {{ script|safe }}
-    {{ div|safe }}
-</div>
+    <h3 class="date">{{ month }}</h3>
+    <div class="production">Produzione Mensile: <span class="qty">{{ nrg_month }} kWh</span></div>
+    <div class="plot">
+        <span class="plot-side"><a href="{{ url_for('monthly', date=prev_month) }}"><i class="fa fa-arrow-circle-left fa-5x"></i></a></span>
+        <span class="main-plot">
+            {{ script|safe }}
+            {{ div|safe }}
+        </span>
+        <span class="plot-side"><a href="{{ url_for('monthly', date=next_month) }}"><i class="fa fa-arrow-circle-right fa-5x"></i></a></span>
+    </div>
+
 {% endblock %}
+
 

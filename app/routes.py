@@ -50,13 +50,15 @@ def daily(date):
               .order_by(PVData.created) \
               .all()
     script, div = BokehPwrHist(db_list).create_hist()
-    
+    nrg_day = round(db_list[-1].nrg_td / 1E3, 1) if db_list else 0
+
     day = dt.strptime(date, '%Y-%m-%d')
     day_string = ' '.join([provide_dow(day.weekday()), str(day.day), provide_month(day.month), str(day.year)])
     prev_day = (day - timedelta(days=1)).strftime('%Y-%m-%d')
     next_day = (day + timedelta(days=1)).strftime('%Y-%m-%d')
     
-    return render_template('daily_production_chart.html', div=div, script=script, day=day_string, next_day=next_day, prev_day=prev_day)
+    return render_template('daily_production_chart.html', div=div, script=script, day=day_string,
+                           next_day=next_day, prev_day=prev_day, nrg_day=nrg_day)
 
 
 @app.route('/monthly', defaults={'date': dt.today})
@@ -74,11 +76,12 @@ def monthly(date):
         .all()
 
     script, div = BokehPwrHist(db_list, type='monthly').create_hist()
+    nrg_month = round(sum([item.nrg_td / 1E3 for item in db_list]), 1) if db_list else 0
 
     month = dt.strptime(date, '%Y-%m')
     month_string = ' '.join([provide_month(month.month), str(month.year)])
     prev_month = (month - relativedelta(months=1)).strftime('%Y-%m')
     next_month = (month + relativedelta(months=1)).strftime('%Y-%m')
 
-    return render_template('monthly_production_chart.html', div=div, script=script, month=month_string, next_month=next_month,
-                           prev_month=prev_month)
+    return render_template('monthly_production_chart.html', div=div, script=script, month=month_string,
+                           next_month=next_month, prev_month=prev_month, nrg_month=nrg_month)

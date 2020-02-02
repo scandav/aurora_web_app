@@ -1,49 +1,37 @@
-{% extends "bootstrap/base.html" %}
-
-{% block head %}
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
-{% endblock %}
-
-{% block title %}
-    {% if title %}{{ title }} - Fotovoltaico{% else %}Fotovoltaico{% endif %}
-{% endblock %}
-
-{% block navbar %}
-    <nav class="navbar navbar-default">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="description" content="Fotovoltaico Scandella">
+        <meta name="keywords" content="tools, python, photovoltaic, raspberry">
+        <meta name="author" content="Davide Scandella">
+        <title>{% if title %}{{ title }} - Fotovoltaico{% else %}Fotovoltaico{% endif %}</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+        {% block style %}{% endblock %}
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="branding">
+                    <h1><span class="bi-color">Fotovoltaico</span> <span class="cursive">Scandella</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('index') }}"><i class="fa fa-dashboard fa-fw"></i>Home</a></li>
+                        <li><a href="{{ url_for('daily') }}"><i class="fa fa-bar-chart-o fa-fw"></i>Giornaliero</a></li>
+                        <li><a href="{{ url_for('monthly') }}"><i class="fa fa-bar-chart-o fa-fw"></i>Mensile</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url_for('index') }}">Fotovoltaico Scandella</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('index') }}"><i class="fa fa-dashboard fa-fw"></i> Statistiche</a></li>
-                    <li><a href="{{ url_for('daily') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Giornaliero</a></li>
-                    <li><a href="{{ url_for('monthly') }}"><i class="fa fa-bar-chart-o fa-fw"></i> Mensile</a></li>
-                </ul>
-            </div>
+            {% block app_content %}
+            {% endblock %}
         </div>
-    </nav>
-{% endblock %}
-
-
-{% block content %}
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        {% block app_content %}{% endblock %}
-    </div>
-{% endblock %}
+        {% block scripts %}
+        {% endblock %}
+    </body>
+</html>

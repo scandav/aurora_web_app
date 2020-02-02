@@ -15,10 +15,17 @@
 {% endblock %}
 
 {% block app_content %}
-<div align="center">
-    <h3 align="center"><a href={{ url_for('daily', date=prev_day) }} class="btn btn-default">Precedente</a>  {{ day }}  <a href={{ url_for('daily', date=next_day) }} class="btn btn-default">Successivo</a></h3>
-    {{ script|safe }}
-    {{ div|safe }}
-</div>
+    <h3 class="date">{{ day }}</h3>
+    <div class="production"><p>Produzione Odierna: <span class="qty">{{ nrg_day }} kWh</span></p></div>
+
+    <div class="plot">
+        <span class="plot-side"><a href="{{ url_for('daily', date=prev_day) }}"><i class="fa fa-arrow-circle-left fa-5x"></i></a></span>
+        <span class="main-plot">
+            {{ script|safe }}
+            {{ div|safe }}
+        </span>
+        <span class="plot-side"><a href="{{ url_for('daily', date=next_day) }}"><i class="fa fa-arrow-circle-right fa-5x"></i></a></span>
+    </div>
+
 {% endblock %}
 
