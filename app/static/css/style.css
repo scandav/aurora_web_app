@@ -19,7 +19,7 @@ header a {
     color: #ffffff;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 1.2rem;
 }
 
 header a:hover {
@@ -34,7 +34,6 @@ header li {
     display: inline;
     padding: 0 20px 0 20px;
 }
-
 
 header .branding {
     float: left;
@@ -61,7 +60,7 @@ header nav {
 .container {
     width: 80%;
     margin: auto;
-    overflow: hidden;
+    /* overflow: hidden; */
     color: #35424a;
 }
 
@@ -89,6 +88,97 @@ h3.date,
 
 .production p {
     margin-top: 0;
+}
+
+.cards-grid{
+    display: flex;
+    justify-content: center;
+    align-items: center;}
+
+.card {
+    display: inline-block;
+    position: relative;
+    width: 27%;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, .35);
+    margin: 1rem;
+}
+
+.card::before,
+.card::after {
+    content: "";
+    position: absolute;
+    border: 1px solid white;
+}
+
+.card::before {
+    top: 1rem;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.card::after {
+    left: 1rem;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.card img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.card-body {
+    background: rgba(0, 0, 0, .5);
+    color: white;
+    padding: 1.5rem;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 2.2rem;
+    margin-bottom: .5em;
+    position: relative;
+    z-index: 1;
+}
+
+.card h3 i {
+    margin-right: 0.5rem;
+}
+
+.card .qty {
+    float: right;
+    font-size: 1.2rem;
+}
+
+.card-text {
+    line-height: 1.3rem;
+}
+
+.card h3::before {
+    content: "";
+    position: absolute;
+    background-color: #35424a;
+    width: calc(100% + 3rem);
+    left: -3rem;
+    top: -.05em;
+    bottom: -.05em;
+    z-index: -1;
+    box-shadow: inset -15px 0 10px -10px black;
+}
+
+.card h3::after {
+    content: "";
+    position: absolute;
+    background-color: #35424a;
+    width: 2rem;
+    left: calc(100% + 1rem);
+    top: -.05em;
+    bottom: -.05em;
+    z-index: -1;
+    box-shadow: inset 15px 0 10px -10px black;
 }
 
 .plot {

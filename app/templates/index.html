@@ -7,29 +7,47 @@
 
         <div class="cards-grid">
             <div class="card">
-                <i class="fa fa-plug fa-5x"></i>
-                <div class="prop-1">Potenza Attuale {{ grid_power }} W</div>
-                <div class="prop-2">Picco di Potenza Oggi {{ pwr_peak_td }} W</div>
+                <img src="//picsum.photos/id/182/555/555">
+                <div class="card-body">
+                    <h3><i class="fa fa-plug"></i>Potenza</h3>
+                    <div class="card-text">Potenza Attuale<span class="qty">{{ grid_power }} W</span></div>
+                    <div class="card-text">Picco di Potenza Oggi<span class="qty">{{ pwr_peak_td }} W</span></div>
+                </div>
             </div>
             <div class="card">
-                <i class="fa fa-bolt fa-5x"></i>
-                <div class="prop-1">Energia Prodotta Oggi {{ nrg_td }} kWh</div>
-                <div class="prop-2">Energia Ultimi 7 Giorni {{ nrg_7days }} kWh</div>
+                <img src="//picsum.photos/id/274/555/555">
+                <div class="card-body">
+                    <h3><i class="fa fa-bolt"></i>Energia</h3>
+                    <div class="card-text">Prodotta Oggi<span class="qty">{{ nrg_td }} kWh</span></div>
+                    <div class="card-text">Prodotta 7 giorni<span class="qty">{{ nrg_7days }} kWh</span></div>
+                </div>
             </div>
             <div class="card">
-                <i class="fa fa-lightbulb-o fa-5x"></i>
-                <div class="prop-1">Energia Prodotta {{ year }} {{ nrg_current_year }} kWh</div>
-                <div class="prop-2">Totale Energia Prodotta {{ nrg_total }} kWh</div>
+                <img src="//picsum.photos/id/1079/555/555">
+                <div class="card-body">
+                    <h3><i class="fa fa-lightbulb-o"></i>Energia</h3>
+                    <div class="card-text">Prodotta {{ year }}<span class="qty">{{ nrg_current_year }} kWh</span></div>
+                    <div class="card-text">Prodotta Totale<span class="qty">{{ nrg_total }} kWh</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <img src="//picsum.photos/id/785/555/555">
+                <div class="card-body">
+                    <h3><i class="fa fa-usd"></i>Incentivi</h3>
+                    <div class="card-text">Incentivi {{ year }}<span class="qty">{{ incent_current_year }} €</span></div>
+                    <div class="card-text">Ultimi 7 Giorni<span class="qty">{{ incent_7days }} €</span></div>
+                </div>
             </div>
             <div class="card">
-                <i class="fa fa-usd fa-5x"></i>
-                <div class="prop-1">Incentivi {{ year }} {{ incent_current_year }} €</div>
-                <div class="prop-2">Incentivi Ultimi 7 Giorni {{ incent_7days }} €</div>
-            </div>
-            <div class="card">
-                <i class="fa fa-clock-o fa-5x"></i>
-                <div class="prop-1">Tempo Operativo {{ operating_time }} giorni</div>
-                <div class="prop-2">Incentivi Ultimi 7 Giorni {{ incent_7days }} €</div>
+                <img src="//picsum.photos/id/357/555/555">
+                <div class="card-body">
+                    <h3><i class="fa fa-clock-o"></i>Attività</h3>
+                    <div class="card-text">Giorni<span class="qty">{{ operating_time }} gg</span></div>
+                    {% set years = operating_time / 365.0 %}
+                    <div class="card-text">Anni<span class="qty">{{ '%0.2f' % years|float }} a</span></div>
+                </div>
             </div>
         </div>
 {% endblock %}
