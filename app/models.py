@@ -1,4 +1,4 @@
-from app import db
+from app import db, ma
 from datetime import datetime
 
 class PVData(db.Model):
@@ -13,5 +13,10 @@ class PVData(db.Model):
     pwr_peak_td = db.Column(db.Integer, nullable=False)
     nrg = db.Column(db.Integer, nullable=False)
     nrg_td = db.Column(db.Integer, nullable=False)
-    
-    
+
+class PVDataSchema(ma.Schema):
+    class Meta:
+        # Fields to expose
+        fields = ("created", "grid_power", "nrg_td")
+
+pvdata_schema = PVDataSchema()

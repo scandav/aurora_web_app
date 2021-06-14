@@ -1,4 +1,7 @@
-.idea
 *.pyc
-venv
 *.db
+
+__pycache__
+venv
+.vscode
+.idea
