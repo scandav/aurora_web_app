@@ -17,6 +17,6 @@ class PVData(db.Model):
 class PVDataSchema(ma.Schema):
     class Meta:
         # Fields to expose
-        fields = ("created", "grid_power", "nrg_td")
+        fields = ("created", "grid_power", "nrg_td", "invert_temp", "booster_temp")
 
 pvdata_schema = PVDataSchema()

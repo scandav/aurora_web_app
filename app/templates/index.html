@@ -58,7 +58,14 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-3 text-gray-800">Dashboard</h1>
+            <div class="row">
+              <div class="col">
+                <h1 class="h3 mb-3 text-gray-800">Dashboard</h1>
+              </div>
+              <div class="col-auto">
+                <i class="text-gray-800 fas fa-sync fa-2x"></i>
+              </div>
+            </div>
 
             <!-- Content Row -->
             <div class="row">
@@ -209,7 +216,6 @@
             </div>
 
             <!-- Content Row -->
-
             <div class="row">
               <!-- Histogram Monthly -->
               <div class="col-lg-6">
@@ -226,9 +232,10 @@
                     "
                   >
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Earnings Overview
+                      Giornaliero
                     </h6>
-                    <div class="ml-auto">
+                    <i class="ml-auto mr-2 text-primary fas fa-sync"></i>
+                    <div>
                       <input
                         class="form-control"
                         type="date"
@@ -252,7 +259,7 @@
                   <div
                     class="
                       card-header
-                      py-2
+                      py-3
                       d-flex
                       flex-row
                       align-items-center
@@ -260,8 +267,33 @@
                     "
                   >
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Revenue Sources
+                      Temperature
                     </h6>
+                  </div>
+                  <!-- Card Body -->
+                  <div class="card-body">
+                    <div class="chart-area">
+                      <canvas id="temperaturePlot"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card shadow mb-4">
+                  <div
+                    class="
+                      card-header
+                      py-2
+                      d-flex
+                      flex-row
+                      align-items-center
+                      justify-content-between
+                    "
+                  >
+                    <h6 class="m-0 font-weight-bold text-primary">Mensile</h6>
                     <div class="ml-auto">
                       <input
                         class="form-control"
@@ -295,9 +327,7 @@
                       justify-content-between
                     "
                   >
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Resoconto Annuale
-                    </h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Annuale</h6>
                   </div>
                   <!-- Card Body -->
                   <div class="card-body">
@@ -320,7 +350,7 @@
                     "
                   >
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Resoconto Cumulativo
+                      Annuale Cumulativo
                     </h6>
                   </div>
                   <!-- Card Body -->

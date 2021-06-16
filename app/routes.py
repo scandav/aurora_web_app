@@ -1,4 +1,5 @@
-from flask import render_template, jsonify
+from flask import render_template, jsonify, send_from_directory
+import os
 from app import app, db
 from app.models import PVData, pvdata_schema
 # from utils.bokeh_charts import provide_dow, provide_month
@@ -7,8 +8,13 @@ from datetime import date, datetime as dt
 # from dateutil.relativedelta import relativedelta
 from sqlalchemy import func, extract
 
+@app.route('/favicon.ico') 
+def favicon(): 
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 @app.route('/')
 def index():
+    
     # latest_rec = PVData.query \
     #              .filter(PVData.created > dt.today().strftime('%Y-%m-%d')) \
     #              .order_by(PVData.id.desc()) \
@@ -32,9 +38,11 @@ def index():
     # incent_7days = nrg_7days * app.config['INCENTIVES']
     # operating_time = (dt.today() - dt.strptime(app.config['START_DATE'], '%Y-%m-%d')).days
     # year = dt.today().year
-    print(date.today().strftime('%Y-%m-%d'))
+
+    # print(date.today().strftime('%Y-%m-%d'))
 
     return render_template("index.html", today_date=date.today())
+
     # grid_power=grid_power, pwr_peak_td=pwr_peak_td, nrg_td=nrg_td,
     #                        nrg_7days=nrg_7days, nrg_current_year=nrg_current_year, nrg_total=nrg_total,
     #                        incent_current_year=incent_current_year, incent_7days=incent_7days,

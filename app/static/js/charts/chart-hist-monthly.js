@@ -22,20 +22,50 @@ const optionsMonthly = { weekday: "short", day: "2-digit" };
 // TODO: handle statuses other than 200 OK
 // TODO: set ylim to zero
 
-const updateHistogramMonhly = function (date_string) {
+const daysInMonth = (month, year) => new Date(year, month, 0).getDate();
+
+const updateHistogramMonthly = function (date_string) {
   $.ajax({
     type: "GET",
     url: `/monthly/${date_string}`,
     dataType: "json",
     success: function (result) {
+      // remainingDays are computed in order to fill with zeros the remaining days of the current month in the plot
+      let remainingDays;
+      const lastSavedDate =
+        result.slice(-1)[0]?.created && new Date(result.slice(-1)[0].created);
+
+      // If month is in the future, lastSavedDate is undefined
+      if (lastSavedDate) {
+        const lastSavedDay = lastSavedDate.getDate();
+        const numberDaysInMonth = daysInMonth(
+          lastSavedDate.getMonth() + 1,
+          lastSavedDate.getFullYear()
+        );
+
+        remainingDays = Array.from(
+          new Array(numberDaysInMonth - lastSavedDay),
+          (x, i) => i + lastSavedDay + 1
+        );
+      } else {
+        remainingDays = Array();
+      }
+
+      // console.log(remainingDays);
+      // console.log(new Array(remainingDays.length).fill(0));
+
       chartMonthly.data = {
-        labels: result.map((item) =>
-          new Date(item.created).toLocaleDateString("it-IT", optionsMonthly)
-        ),
+        labels: result
+          .map((item) =>
+            new Date(item.created).toLocaleDateString("it-IT", optionsMonthly)
+          )
+          .concat(remainingDays),
         datasets: [
           {
             label: "Monthly Production",
-            data: result.map((item) => item.nrg_td / 1000),
+            data: result
+              .map((item) => item.nrg_td / 1000)
+              .concat(new Array(remainingDays.length).fill(0)), // array filled with zeros
             backgroundColor: "#1cc88a",
           },
         ],
@@ -47,9 +77,9 @@ const updateHistogramMonhly = function (date_string) {
 
 const month_input = document.getElementById("month-input");
 
-updateHistogramMonhly(month_input.value);
+updateHistogramMonthly(month_input.value);
 
 month_input.addEventListener("change", function (e) {
   e.target.blur();
-  updateHistogramMonhly(month_input.value);
+  updateHistogramMonthly(month_input.value);
 });
