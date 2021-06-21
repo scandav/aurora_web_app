@@ -9,6 +9,18 @@ const chartMonthly = new Chart(ctxMonthly, {
   type: "bar",
   data: {},
   options: {
+    title: {
+      display: true,
+    },
+    scales: {
+      xAxes: [
+        {
+          gridLines: {
+            display: false,
+          },
+        },
+      ],
+    },
     maintainAspectRatio: false,
     legend: {
       display: false,
@@ -35,6 +47,13 @@ const updateHistogramMonthly = function (date_string) {
       const lastSavedDate =
         result.slice(-1)[0]?.created && new Date(result.slice(-1)[0].created);
 
+      const nrgArray = result.map((item) => item.nrg_td / 1000);
+      const daysArray = result.map((item) =>
+        new Date(item.created).toLocaleDateString("it-IT", optionsMonthly)
+      );
+      const totalPower = nrgArray.reduce((a, b) => a + b, 0).toFixed(1);
+      // console.log(totalPower);
+
       // If month is in the future, lastSavedDate is undefined
       if (lastSavedDate) {
         const lastSavedDay = lastSavedDate.getDate();
@@ -55,21 +74,16 @@ const updateHistogramMonthly = function (date_string) {
       // console.log(new Array(remainingDays.length).fill(0));
 
       chartMonthly.data = {
-        labels: result
-          .map((item) =>
-            new Date(item.created).toLocaleDateString("it-IT", optionsMonthly)
-          )
-          .concat(remainingDays),
+        labels: daysArray.concat(remainingDays),
         datasets: [
           {
             label: "Monthly Production",
-            data: result
-              .map((item) => item.nrg_td / 1000)
-              .concat(new Array(remainingDays.length).fill(0)), // array filled with zeros
+            data: nrgArray.concat(new Array(remainingDays.length).fill(0)), // array filled with zeros
             backgroundColor: "#1cc88a",
           },
         ],
       };
+      chartMonthly.options.title.text = `Totale: ${totalPower} kWh`;
       chartMonthly.update();
     },
   });
