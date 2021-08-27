@@ -1,4 +1,4 @@
-from flask import render_template, jsonify, send_from_directory
+from flask import render_template, jsonify, send_from_directory, request
 import os
 from app import app, db
 from app.models import PVData, pvdata_schema
@@ -80,4 +80,23 @@ def yearly(year):
             .group_by(extract('month', sq.c.created)) \
             .all()
 
-    return jsonify(pvdata_schema.dump(items, many=True))       
+    return jsonify(pvdata_schema.dump(items, many=True))     
+
+@app.route('/new', methods = ['POST'])
+def new():
+    json = request.json
+
+    db_entry = PVData(grid_voltage=round(json['grid_voltage'], 1),
+                      grid_current=round(json['grid_current'], 1),
+                      grid_power=int(json['grid_power']),
+                      invert_temp=round(json['invert_temp'], 1),
+                      booster_temp=round(json['booster_temp'], 1),
+                      pwr_peak=int(json['pwr_peak']),
+                      pwr_peak_td=int(json['pwr_peak_td']),
+                      nrg_td=int(json['nrg_td']),
+                      nrg=int(json['nrg']))
+
+    db.session.add(db_entry)
+    db.session.commit()
+    
+    return jsonify(success=True), 200, {'ContentType':'application/json'}

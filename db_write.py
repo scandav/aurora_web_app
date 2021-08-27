@@ -1,6 +1,7 @@
 from aurorapy.client import AuroraError, AuroraSerialClient
 from app import db
 from app.models import PVData
+import requests
 
 client = AuroraSerialClient(port='/dev/ttyUSB0', address=2, parity='N')
 client.connect()
@@ -30,6 +31,32 @@ try:
     
     db.session.add(db_entry)
     db.session.commit()
+
+    r = requests.post("http://scandav.pythonanywhere.com/new", 
+        data={'grid_voltage': grid_voltage, 
+              'grid_current': grid_current, 
+              'grid_power': grid_power,
+              'invert_temp': invert_temp,
+              'booster_temp': booster_temp,
+              'pwr_peak': pwr_peak,
+              'pwr_peak_td': pwr_peak_td,
+              'nrg_td': nrg_td,
+              'nrg': nrg}
+    )
+
+    # r = requests.post("http://localhost:5000/new", 
+    #     json={'grid_voltage': 0, 
+    #           'grid_current': 0, 
+    #           'grid_power': 0,
+    #           'invert_temp': 0,
+    #           'booster_temp': 0,
+    #           'pwr_peak': 0,
+    #           'pwr_peak_td': 0,
+    #           'nrg_td': 0,
+    #           'nrg': 0}
+    # )
+
+    # print(r.status_code)
 
 except AuroraError as e:
     print(str(e))
