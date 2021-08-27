@@ -33,7 +33,7 @@ try:
     db.session.commit()
 
     r = requests.post("http://scandav.pythonanywhere.com/new", 
-        data={'grid_voltage': grid_voltage, 
+        json={'grid_voltage': grid_voltage, 
               'grid_current': grid_current, 
               'grid_power': grid_power,
               'invert_temp': invert_temp,
